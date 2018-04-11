@@ -26,7 +26,7 @@ model_file = data_dir+'final.model'
 use_gpu = True
 load_model = False
 make_validation_output = False # generates validation output if True or test output if False
-batch_size = 200
+batch_size = 100
 num_epoches = 1
 
 data_transform = transforms.Compose([
