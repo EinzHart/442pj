@@ -35,8 +35,8 @@ data_transform = transforms.Compose([
 
 train_dataset = MyCustomDataset(train_dir,  training_flag = True, transforms=data_transform)
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
-validation_dataset = MyCustomDataset(validation_dir,  training_flag = False, transforms=data_transform)
-validation_dataloader = DataLoader(validation_dataset, batch_size=20, shuffle=False)
+#validation_dataset = MyCustomDataset(validation_dir,  training_flag = False, transforms=data_transform)
+#validation_dataloader = DataLoader(validation_dataset, batch_size=20, shuffle=False)
 
 test_dataset = MyCustomDataset(test_dir,  training_flag = False, transforms=data_transform)
 test_dataloader = DataLoader(test_dataset, batch_size=20, shuffle=False)
