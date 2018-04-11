@@ -21,12 +21,12 @@ data_dir = '../EstimateSurfaceNormal/'
 train_dir = data_dir+'train/'
 test_dir = data_dir+'test/'
 validation_dir = data_dir+'validation/'
-model_file = data_dir+'model/1.model'
+model_file = data_dir+'final.model'
 
 use_gpu = True
 load_model = False
 make_validation_output = False # generates validation output if True or test output if False
-batch_size =1
+batch_size = 200
 num_epoches = 1
 
 data_transform = transforms.Compose([
