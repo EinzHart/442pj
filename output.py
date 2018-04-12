@@ -6,10 +6,12 @@ import cv2
 import numpy as np
 from network import basicNet
 from custom_dataloader import MyCustomDataset
+from hourglass import Model
+from collections import OrderedDict
 
 def generate_output(dir,dataloader,model,use_gpu):
     output_dir = dir+'normal/'
-    name = 100
+    name = 0 #change this to the first image number to be generated from color
     model.eval()
 
     for i, minibatch in enumerate(dataloader):
@@ -30,23 +32,29 @@ def generate_output(dir,dataloader,model,use_gpu):
         n,c,h,w = outputs.size()
         for idx in range(n):
             img = outputs[idx,:,:,:]
-            img = img.data.numpy().transpose((1,2,0))
+            img = img.data.cpu().numpy().transpose((1,2,0))
 
             cv2.imwrite(output_dir+'{}.png'.format(name),img)
             name +=1
 
 if __name__ == '__main__':
-    use_gpu = False
+    use_gpu = True
 
-    data_dir = '../data_debug/'
-    validation_dir = data_dir+'validation/'
+    data_dir = '../data/'
+    # output_dir = data_dir+'validation/'
+    output_dir = data_dir+'test/'
     model_file = data_dir+'model/1.model'
-    model = basicNet()
-    model.load_state_dict(torch.load(model_file, map_location = 'cpu'))
+    # model = basicNet()
+    model = Model()
+    if not use_gpu:
+        model.load_state_dict(torch.load(model_file, map_location = 'cpu'))
+    else:
+        model = model.cuda()
+        model.load_state_dict(torch.load(model_file))
 
     data_transform = transforms.Compose([
             transforms.ToTensor() #applies torchvision's function which normalizes to 0-1.0 and transposes
             ])
-    validation_dataset = MyCustomDataset(validation_dir,  training_flag = False, transforms=data_transform)
-    validation_dataloader = DataLoader(validation_dataset, batch_size=20, shuffle=False)
-    generate_output(validation_dir,validation_dataloader,model,use_gpu)
+    output_dataset = MyCustomDataset(output_dir,  training_flag = False, transforms=data_transform)
+    output_dataloader = DataLoader(output_dataset, batch_size=50, shuffle=False)
+    generate_output(output_dir,output_dataloader,model,use_gpu)

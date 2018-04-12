@@ -56,7 +56,8 @@ class Channels1(nn.Module):
 				inception(256,[[64],[3,32,64],[5,32,64],[7,32,64]]),
 				inception(256,[[64],[3,32,64],[5,32,64],[7,32,64]]),
 				inception(256,[[64],[3,32,64],[5,32,64],[7,32,64]]),
-				nn.UpsamplingNearest2d(scale_factor=2)
+				# nn.UpsamplingNearest2d(scale_factor=2)
+				nn.Upsample(scale_factor=2)
 				)
 			) #EEE
 
@@ -81,7 +82,9 @@ class Channels2(nn.Module):
 				Channels1(),
 				inception(256, [[64], [3,32,64], [5,32,64], [7,32,64]]),
 				inception(256, [[64], [3,64,64], [7,64,64], [11,64,64]]),
-				nn.UpsamplingNearest2d(scale_factor=2)
+				# nn.UpsamplingNearest2d(scale_factor=2)
+				nn.Upsample(scale_factor=2)
+
 				)
 			)#EE1EF
 
@@ -100,7 +103,9 @@ class Channels3(nn.Module):
 				Channels2(),
 				inception(256, [[64], [3,32,64], [5,32,64], [7,32,64]]),
 				inception(256, [[32], [3,32,32], [5,32,32], [7,32,32]]),
-				nn.UpsamplingNearest2d(scale_factor=2)
+				# nn.UpsamplingNearest2d(scale_factor=2)
+				nn.Upsample(scale_factor=2)
+
 				)
 			)#BD2EG
 		self.list.append(
@@ -125,7 +130,9 @@ class Channels4(nn.Module):
 				Channels3(),
 				inception(128, [[32], [3,64,32], [5,64,32], [7,64,32]]),
 				inception(128, [[16], [3,32,16], [7,32,16], [11,32,16]]),
-				nn.UpsamplingNearest2d(scale_factor=2)
+				# nn.UpsamplingNearest2d(scale_factor=2)
+				nn.Upsample(scale_factor=2)
+
 				)
 			)#BB3BA
 		self.list.append(
